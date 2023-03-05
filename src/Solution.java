@@ -1,14 +1,49 @@
 class Solution {
     public String numberToWords(int num) {
         String result = "";
-        String[] ones = {"","One ","Two ","Three ","Four ","Five ","Six ","Seven ","Eight ","Nine "};
-        String[] tens = {"","Ten ","Twenty ","Thirty ","Forty ","Fifty ", "Sixty ", "Seventy ","Eighty ", "Ninety "};
-        String[] hundreds = {"","One Hundred ","Two Hundred ","Three Hundred ","Four Hundred ","Five Hundred ","Six Hundred ","Seven Hundred ","Eight Hundred ","Nine Hundred "};
-        String [] thousands = {"","One Thousand ","Two Thousand ","Three Thousand ","Four Thousand ","Five Thousand ","Six Thousand ","Seven Thousand ","Eight Thousand ","Nine Thousand "};
-        String[] milliard = {"","One Milliard ","Two Milliard "};
+        String[] ones = {"", "One ", "Two ", "Three ", "Four ", "Five ", "Six ", "Seven ", "Eight ", "Nine ", "Ten ", "Eleven ", "Twelve ", "Thirteen ", "Fourteen ", "Fifteen", "Sixteen ", "Seventeen ", "Eighteen ", "Nineteen "};
+        String[] tens = {"", "", "Twenty ", "Thirty ", "Forty ", "Fifty ", "Sixty ", "Seventy ", "Eighty ", "Ninety "};
+        String[] hundreds = {"", "One Hundred ", "Two Hundred ", "Three Hundred ", "Four Hundred ", "Five Hundred ", "Six Hundred ", "Seven Hundred ", "Eight Hundred ", "Nine Hundred "};
+        String[] milliard = {"", "One Milliard ", "Two Milliard "};
 
-        result =  hundreds[(num % 1_000_000)/100_000] + tens[(num % 100_000)/10_000] + ones[(num % 10_000)/1000] + "Thousand "
-                + hundreds[(num % 1000)/100] + tens[(num % 100)/10] + ones[num % 10];
+        String oneDigits;
+        String tensDigits;
+        String oneDigitsThousands;
+        String tensDigitsThousands;
+        String oneDigitsMillions;
+        String tensDigitsMillions;
+
+        // small numbers
+        if ((num % 100) > 9 && (num % 100) < 20) {
+            oneDigits = ones[num % 100] + " ";
+            tensDigits = "";
+        } else {
+            oneDigits = ones[num % 10] + " ";
+            tensDigits = tens[(num % 100)/10];
+        }
+        //thousands
+        int thouDivider = num % 100_000;
+        if ((thouDivider)/1000 > 9 && (thouDivider)/1000 < 20) {
+            oneDigitsThousands = ones[thouDivider/1000];
+            tensDigitsThousands = "";
+        } else {
+            oneDigitsThousands = ones[(num % 10_000)/1000];
+            tensDigitsThousands = tens[(thouDivider)/10_000];
+        }
+        //millions
+        int millDivider = num % 100_000_000;
+        if ((millDivider)/1000_000 > 9 && (millDivider)/1000_000 < 20) {
+            oneDigitsMillions = ones[millDivider/1000_000];
+            tensDigitsMillions = "";
+        } else {
+            oneDigitsMillions = ones[(num % 10_000_000)/1000_000];
+            tensDigitsMillions = tens[(millDivider)/10_000_000];
+        }
+        int milliardCount = num/1_000_000/1000;
+            result =  milliard[milliardCount]
+                    + hundreds[(num % 1_000_000_000) / 100_000_000] + tensDigitsMillions + oneDigitsMillions + "Million "
+                    + hundreds[(num % 1_000_000) / 100_000] + tensDigitsThousands + oneDigitsThousands + "Thousand "
+                    + hundreds[(num % 1000) / 100] + tensDigits + oneDigits;
 
         return result.trim();
     }
