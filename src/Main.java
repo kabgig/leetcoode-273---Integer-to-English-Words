@@ -3,7 +3,7 @@ public class Main {
         Solution solution = new Solution();
         System.out.println
                 (solution.numberToWords
-                        (1015667720));
+                        (1_015_667_720));
 
     }
 }
