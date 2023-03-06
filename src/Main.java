@@ -1,9 +1,9 @@
 public class Main {
     public static void main(String[] args) {
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         System.out.println
                 (solution.numberToWords
-                        (1_015_667_720));
+                        (2_015_667_713));
 
     }
 }
